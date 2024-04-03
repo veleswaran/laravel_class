@@ -2,16 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CategoryServices;
+use App\Services\ProductServices;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+
+    public $product;
+    public $category;
+
+    public function __construct(ProductServices $productService, CategoryServices $categoryServices)
+    {
+        $this->product = $productService;
+        $this->category = $categoryServices;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $products = $this->product->getProducts();
+        return view('product.list', compact('products'));
     }
 
     /**
@@ -19,7 +31,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = $this->category->getCategories();
+        return view('shop.product.create', compact('categories'));
     }
 
     /**
@@ -27,7 +40,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->product->addProduct($request);
+        return redirect('product');
     }
 
     /**
@@ -60,5 +74,11 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function showProduct($id)
+    {
+        $products = $this->product->getProduct($id);
+        return $products;
     }
 }
