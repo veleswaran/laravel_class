@@ -23,7 +23,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = $this->product->getProducts();
-        return view('product.list', compact('products'));
+        return view('shop.product.list', compact('products'));
     }
 
     /**
@@ -40,8 +40,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->product->addProduct($request);
-        return redirect('product');
+        return "data added successfully";
     }
 
     /**
@@ -49,7 +50,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $products=$this->product->getProductshow($id);
+        return view('shop.product.productdetails',compact('products'));
     }
 
     /**
@@ -79,6 +81,7 @@ class ProductController extends Controller
     public function showProduct($id)
     {
         $products = $this->product->getProduct($id);
-        return $products;
+        $category_name = $this->category->getCategory($id)['name'];
+        return view('shop.product.list', compact('products', 'category_name'));
     }
 }

@@ -21,4 +21,4 @@ Route::get('/dashboard', function () {
 
 Route::resource('product', ProductController::class);
 Route::resource('category', CategoryController::class);
-Route::get('category/{id}/product',[ProductController::class,'showProduct']);
+Route::get('category/{id}/products',[ProductController::class,'showProduct']);

@@ -47,9 +47,9 @@
     </div>
 
     @stack('modals')
-
     @livewireScripts
     @include('components.footer')
+    <script src="{{asset('js/quantity.js')}}"></script>
 </body>
 
 </html>
