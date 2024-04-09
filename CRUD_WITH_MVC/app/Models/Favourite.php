@@ -5,23 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model
+class Favourite extends Model
 {
     use HasFactory;
+    protected $table = 'favourites';
+    protected $fillable = ['user_id', 'product_id'];
 
-    protected $fillable = ['product_id', 'user_id', 'product_qty'];
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    public function getTotalCostAttribute()
-    {
-        return $this->product_qty * $this->product->newprice;
     }
 }

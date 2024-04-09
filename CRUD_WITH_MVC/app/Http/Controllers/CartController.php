@@ -18,7 +18,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $cart = $this->cart->getCarts();
+        return view('shop.cart.list', ['cart' => $cart]);
     }
 
     /**
@@ -27,7 +28,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $this->cart->addCart($request);
-        return response()->json(['message' => 'Success','vel'=>$request], 200);
+        return response()->json(['message' => 'Success', 'vel' => $request], 200);
     }
 
     /**
@@ -59,6 +60,7 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->cart->deleteCart($id);
+        return redirect('cart');
     }
 }
