@@ -15,13 +15,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::resource('product', ProductController::class);
-    Route::resource('category', CategoryController::class);
-});
-
 Route::middleware('auth')->group(function () {
     Route::get('product' , [ProductController::class, 'index']);
+    Route::get('product/{id}' , [ProductController::class, 'show']);
     Route::get('category' , [CategoryController::class, 'index'])->name('category');
     Route::resource('cart', CartController::class)->names('cart');
     Route::get('favourite', [FavouriteController::class, 'index']);
@@ -30,3 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::get('remove-cart/{id}', [CartController::class, 'destroy'])->name('remove-cart');
     Route::get('category/{id}/products', [ProductController::class, 'showProduct']);
 });
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('product', ProductController::class);
+    Route::resource('category', CategoryController::class);
+});
+
+
